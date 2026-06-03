@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>July & Sakhile's Wedding Invitation</title>
+    <meta name="description" content="You are cordially invited to celebrate the wedding of July Masuku and Sakhile Skhosana on Saturday, 31 October 2026.">
+    <meta property="og:title" content="July & Sakhile's Wedding Invitation">
+    <meta property="og:description" content="31 October 2026 - Waterfront Lodge, Standerton">
+    <meta property="og:type" content="website">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Montserrat:wght@200;300;400;500&display=swap');
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-canvas: #fbf7f8;
+            --charcoal: #4b4e51;
+            --soft-charcoal: #5f6366;
+            --light-gray: #a7a9ac;
+            --mist-gray: #eeeeef;
+            --pure-white: #ffffff;
+            --paper-white: #fffdfb;
+            --blush-pink: #f7dfe8;
+            --accent-pink: #cf7889;
+            --deep-pink: #b85f72;
+            --dusty-rose: #c87982;
+            --text-muted: #777b7e;
+            --line-soft: #eadde1;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Montserrat', sans-serif;
+            background:
+                radial-gradient(circle at 12% 8%, rgba(247, 210, 224, 0.65) 0 120px, transparent 260px),
+                radial-gradient(circle at 88% 20%, rgba(232, 233, 234, 0.75) 0 150px, transparent 300px),
+                radial-gradient(circle at 15% 88%, rgba(248, 220, 229, 0.55) 0 150px, transparent 320px),
+                linear-gradient(135deg, #fffefe 0%, var(--bg-canvas) 48%, #f1f1f2 100%);
+            color: var(--charcoal);
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.45;
+            background-image:
+                linear-gradient(90deg, rgba(120,120,120,0.035) 1px, transparent 1px),
+                linear-gradient(rgba(120,120,120,0.025) 1px, transparent 1px);
+            background-size: 42px 42px;
+            z-index: -1;
+        }
+
+        #welcome-doors-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            display: flex;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .sliding-panel {
+            width: 50%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: transform 1.4s cubic-bezier(0.77, 0, 0.175, 1);
+            pointer-events: auto;
+            position: relative;
+        }
+
+        .sliding-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0.32;
+            background-image:
+                repeating-linear-gradient(0deg, rgba(95,99,102,0.05) 0 1px, transparent 1px 4px),
+                repeating-linear-gradient(90deg, rgba(207,120,137,0.04) 0 1px, transparent 1px 5px);
+            mix-blend-mode: multiply;
+        }
+
+        .sliding-panel::after {
+            content: 'J  &  S';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(42px, 9vw, 92px);
+            letter-spacing: 10px;
+            color: rgba(184,95,114,0.15);
+            white-space: nowrap;
+        }
+
+        .panel-left {
+            background-image: url('assets/Old-Paper.svg');
+            box-shadow: 12px 0 34px rgba(95,99,102,0.22);
+            border-right: 1px solid rgba(207,120,137,0.16);
+        }
+        .panel-left::after { right: 28px; }
+
+        .panel-right {
+            background-image: url('assets/Old-Paper.svg');
+            box-shadow: -12px 0 34px rgba(95,99,102,0.22);
+        }
+        .panel-right::after { left: 28px; }
+
+        .doors-activated .panel-left { transform: translateX(-100%); }
+        .doors-activated .panel-right { transform: translateX(100%); }
+
+
+        .wax-seal-container{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+            z-index: 100000;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        .wax-seal-half{
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 1.4s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s ease;
+        }
+
+        .wax-seal-half img{
+            position: absolute;
+            top: 0;
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .wax-seal-left{
+            left: 0;
+            border-top-left-radius: 100px;
+            border-bottom-left-radius: 100px;
+        }
+
+        .wax-seal-left img{
+            left: 0;
+        }
+
+        .wax-seal-right{
+            right: 0;
+            border-top-right-radius: 100px;
+            border-bottom-right-radius: 100px;
+        }
+
+        .wax-seal-right img{
+            right: 0;
+        }
+
+        .wax-seal-container:hover .wax-seal-left{
+            transform: translateX(-3px) rotate(-2deg);
+        }
+
+        .wax-seal-container:hover .wax-seal-right{
+            transform: translateX(3px) rotate(2deg);
+        }
+
+        .doors-activated .wax-seal-left{
+            transform: translateX(-120px) rotate(-12deg);
+            opacity: 0;
+        }
+
+        .doors-activated .wax-seal-right{
+            transform: translateX(120px) rotate(12deg);
+            opacity: 0;
+        }
+
+        .press-open-text{
+            position: fixed;
+            top: calc(50% + 95px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100001;
+            pointer-events: auto;
+            cursor: pointer;
+
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            white-space: nowrap;
+
+            color: #ffffff;
+            padding: 8px 16px;
+
+            background: rgba(80,62,66,0.42);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+
+            border: 1px solid rgba(255,255,255,0.32);
+            border-radius: 30px;
+
+            text-shadow: 0 2px 6px rgba(0,0,0,0.45);
+            transition: opacity 0.5s ease;
+        }
+
+        .doors-activated .press-open-text{
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #main-application {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.2s ease-out;
+            max-width: 550px;
+            margin: 0 auto;
+            background:
+                radial-gradient(circle at top left, rgba(247,223,232,0.54), transparent 190px),
+                radial-gradient(circle at bottom right, rgba(207,120,137,0.13), transparent 220px),
+                linear-gradient(180deg, rgba(255,255,255,0.99), rgba(255,253,251,0.98));
+            box-shadow: 0 18px 60px rgba(81,83,85,0.10);
+            padding-bottom: 100px;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #main-application::before,
+        #main-application::after {
+            content: '';
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: rgba(247,223,232,0.38);
+            filter: blur(4px);
+            z-index: 0;
+            pointer-events: none;
+        }
+        #main-application::before { top: -125px; right: -125px; }
+        #main-application::after { bottom: 80px; left: -145px; background: rgba(232,233,234,0.55); }
+
+        #main-application.visible { opacity: 1; visibility: visible; }
+        #main-application > * { position: relative; z-index: 1; }
+
+        .site-header {
+            text-align: center;
+            padding: 64px 20px 30px 20px;
+        }
+
+        .site-monogram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .site-monogram img{
+            width: 220px;
+            max-width: 80%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .section-card {
+            padding: 50px 30px;
+            text-align: center;
+            border-top: 1px solid var(--line-soft);
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--soft-charcoal);
+            margin-bottom: 20px;
+        }
+
+        .section-body {
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        .metrics-block {
+            background: rgba(255,255,255,0.78);
+            margin: 30px 20px;
+            border-radius: 14px;
+            padding: 10px 0;
+            border: 1px solid var(--line-soft);
+            box-shadow: 0 10px 28px rgba(207,120,137,0.08);
+        }
+
+        .metrics-row {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .metric-item-val {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: var(--deep-pink);
+            font-weight: 500;
+        }
+
+        .couple-frames-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding: 0 20px 40px 20px;
+        }
+
+        .couple-photo-box {
+            background: linear-gradient(135deg, #f3f3f4, #f8dfe8);
+            aspect-ratio: 3 / 4;
+            border: 6px solid var(--pure-white);
+            box-shadow: 0 8px 20px rgba(95,99,102,0.10);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        
+        .bride-photo{
+            background-image: url('assets/Bride.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .groom-photo{
+            background-image: url('assets/Groom.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .venue-photo{
+    background-image: url('assets/venue.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.venue-photo::before{
+    content: '';
+}
+            font-size: 10px;
+            color: var(--light-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .couple-frame-title{
+position: absolute;
+bottom: 18px;
+left: 50%;
+
+```
+transform: translateX(-50%);
+
+padding: 8px 16px;
+
+background: rgba(255,255,255,0.82);
+
+backdrop-filter: blur(6px);
+-webkit-backdrop-filter: blur(6px);
+
+border: 1px solid rgba(255,255,255,0.4);
+
+border-radius: 30px;
+
+font-size: 11px;
+letter-spacing: 2px;
+text-transform: uppercase;
+
+color: #12324a;
+
+z-index: 5;
+
+white-space: nowrap;
+```
+
+}
+
+
+        .venue-photo-placeholder {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            margin-top: 20px;
+            border: 6px solid var(--pure-white);
+            box-shadow: 0 8px 20px rgba(95,99,102,0.10);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .venue-photo-placeholder::before {
+            content: '';
+            font-size: 11px;
+            color: var(--light-gray);
+            text-transform: uppercase;
+        }
+
+        .google-maps-anchor {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--dusty-rose);
+            color: var(--pure-white);
+            text-decoration: none;
+            padding: 12px 28px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            margin-top: 20px;
+            transition: background 0.3s;
+            box-shadow: 0 8px 18px rgba(207,120,137,0.20);
+        }
+
+        .google-maps-anchor:hover { background-color: var(--deep-pink); }
+
+        .timeline-flow {
+            max-width: 320px;
+            margin: 30px auto 0 auto;
+            text-align: left;
+            border-left: 1px solid var(--accent-pink);
+            padding-left: 30px;
+        }
+
+        .timeline-node { position: relative; margin-bottom: 20px; }
+        .timeline-node::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 5px;
+            width: 7px;
+            height: 7px;
+            background-color: var(--dusty-rose);
+            border: 2px solid var(--pure-white);
+            box-shadow: 0 0 0 2px rgba(207,120,137,0.16);
+            border-radius: 50%;
+        }
+
+        .timeline-node-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            text-transform: uppercase;
+            color: var(--soft-charcoal);
+        }
+
+        .whatsapp-rsvp-btn {
+            display: inline-block;
+            background-color: var(--dusty-rose);
+            color: var(--pure-white);
+            text-decoration: none;
+            padding: 16px 40px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 280px;
+            transition: background 0.3s;
+            box-shadow: 0 8px 18px rgba(207,120,137,0.22);
+        }
+
+        .whatsapp-rsvp-btn:hover { background-color: var(--deep-pink); }
+
+        .app-bottom-dock {
+            position: fixed !important;
+            left: 50% !important;
+            right: auto !important;
+            bottom: 0 !important;
+            transform: translate3d(-50%, 0, 0);
+            width: min(100vw, 550px);
+            max-width: 550px;
+            margin: 0;
+            background-color: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid var(--line-soft);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 10px calc(10px + env(safe-area-inset-bottom, 0px)) 10px;
+            z-index: 99999;
+            box-shadow: 0 -10px 28px rgba(81,83,85,0.08);
+        }
+
+        .dock-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--light-gray);
+            text-decoration: none;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .dock-item svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--light-gray);
+            margin-bottom: 4px;
+            transition: fill 0.3s;
+        }
+
+        .dock-item.active, .dock-item:hover { color: var(--deep-pink); }
+        .dock-item.active svg, .dock-item:hover svg { fill: var(--deep-pink); }
+
+        html { scroll-behavior: smooth; }
+		
+		.couple-photo-box{
+    position: relative !important;
+}
+
+.couple-frame-title{
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 14px !important;
+    top: auto !important;
+    transform: translateX(-50%) !important;
+    z-index: 20 !important;
+
+    background: rgba(255,255,255,0.88);
+    color: var(--deep-pink);
+    padding: 6px 16px;
+    border-radius: 30px;
+
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+		
+    </style>
+</head>
+<body>
+
+    <div id="welcome-doors-screen">
+        <div class="sliding-panel panel-left"></div>
+
+        <div class="wax-seal-container" onclick="executeSlidingSequence()">
+            <div class="wax-seal-half wax-seal-left">
+                <img src="assets/Seal.png" alt="">
+            </div>
+            <div class="wax-seal-half wax-seal-right">
+                <img src="assets/Seal.png" alt="">
+            </div>
+        </div>
+
+        <div class="press-open-text" onclick="executeSlidingSequence()">PRESS TO OPEN</div>
+
+        <div class="sliding-panel panel-right"></div>
+    </div>
+
+
+    <div id="main-application">
+        
+        <header class="site-header" id="home-sec">
+            <div class="site-monogram">
+                <img src="assets/js-logo.svg" alt="J&S Logo">
+            </div>
+            <p style="font-size:11px; text-transform:uppercase; letter-spacing:4px; color:var(--light-gray); margin-top:10px;">July & Sakhile</p>
+        </header>
+
+        <section class="section-card">
+            <p style="font-family:'Cormorant Garamond', serif; font-style:italic; font-size:22px; line-height:1.6; color:var(--charcoal);">
+                “When the time is right, I, the Lord will make it happen.”
+            </p>
+            <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--light-gray); margin-top:12px;">Isaiah 60:22</p>
+        </section>
+
+<section class="section-card" id="story-sec">
+            <h2 class="section-title">The Invitation</h2>
+            <p class="section-body">
+                Together with their families, July Masuku and Sakhile Skhosana cordially invite you to their wedding ceremony, as they exchange their vows and begin their lives in Holy Matrimony.
+            </p>
+        </section>
+
+        <section class="couple-frames-container" id="couple-sec">
+
+            <div class="couple-photo-box bride-photo">
+                <div class="couple-frame-title">The Bride</div>
+            </div>
+
+            <div class="couple-photo-box groom-photo">
+                <div class="couple-frame-title">The Groom</div>
+            </div>
+
+        </section>
+
+<div class="metrics-block" id="details">
+            <div class="metrics-row" style="border-bottom: 1px solid #f2eee9;">
+                <div>
+                    <div class="metric-item-val">31 October 2026</div>
+                    <p style="font-size:9px; text-transform:uppercase; color:var(--light-gray); letter-spacing:1px;">Date</p>
+                </div>
+                <div>
+                    <div class="metric-item-val">08:00 AM</div>
+                    <p style="font-size:9px; text-transform:uppercase; color:var(--light-gray); letter-spacing:1px;">Time</p>
+                </div>
+            </div>
+            <div class="metrics-row">
+                <div style="max-width:80%;">
+                    <div class="metric-item-val" style="font-size:16px;">Waterfront Lodge</div>
+                    <p style="font-size:11px; color:var(--text-muted); margin-top:2px;">Portion 9, Plaas Verblyden, Standerton</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="section-card" id="venue-sec">
+            <h2 class="section-title">The Venue Location</h2>
+            <p class="section-body">
+                The ceremony and reception will take place at the gorgeous Waterfront Lodge in Standerton. Use the interactive navigation map button below to map your travel route.
+            </p>
+            
+            <div class="venue-photo-placeholder venue-photo"></div>
+
+            <a href="https://maps.google.com/?q=Waterfront+Lodge+Standerton" class="google-maps-anchor" target="_blank">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:4px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                Open Google Maps
+            </a>
+        </section>
+
+        <section class="section-card">
+            <h2 class="section-title">Wedding Timeline</h2>
+            <div class="timeline-flow">
+                <div class="timeline-node"><div class="timeline-node-text">Ceremony</div></div>
+                <div class="timeline-node"><div class="timeline-node-text">Photoshoot</div></div>
+                <div class="timeline-node"><div class="timeline-node-text">Lunch</div></div>
+                <div class="timeline-node"><div class="timeline-node-text">Reception</div></div>
+                <div class="timeline-node"><div class="timeline-node-text">Toast</div></div>
+            </div>
+        </section>
+
+        <section class="section-card" style="background-color: #faf8f5;">
+            <h2 class="section-title">Dress Code</h2>
+            <p class="section-body" style="text-transform:uppercase; letter-spacing:2px; font-weight:500;">
+                Pink, White, Grey
+            </p>
+        </section>
+
+        <section class="section-card">
+            <h2 class="section-title">A Note On Gifts</h2>
+            <p class="section-body">
+                Your love and company on our wedding day is the most precious gift we could ask for. If a gift is on your mind, any gift voucher would be appreciated. Any other gifts are also warmly welcomed.
+            </p>
+        </section>
+
+        <section class="section-card" id="rsvp-sec">
+            <h2 class="section-title">RSVP</h2>
+            <p class="section-body">Kindly confirm your attendance by clicking below to respond directly via WhatsApp.</p>
+            <a href="https://wa.me/27683225858?text=Hi%20July%20and%20Sakhile%2c%20I%20would%20love%20to%20confirm%20my%20RSVP%20for%20your%20wedding%21" class="whatsapp-rsvp-btn" target="_blank">
+                RSVP via WhatsApp
+            </a>
+        </section>
+
+        <nav class="app-bottom-dock">
+            <button class="dock-item active" onclick="scrollToAnchor('home-sec', this)">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                Home
+            </button>
+            <button class="dock-item" onclick="scrollToAnchor('couple-sec', this)">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                The Couple
+            </button>
+            <button class="dock-item" onclick="scrollToAnchor('details', this)">
+                <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+                Details
+            </button>
+            <button class="dock-item" onclick="scrollToAnchor('rsvp-sec', this)">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                RSVP
+            </button>
+        </nav>
+
+    </div>
+
+    <script>
+        function executeSlidingSequence() {
+            // 1. Append state configuration class triggering 2-way CSS transitions
+            document.getElementById('welcome-doors-screen').classList.add('doors-activated');
+            
+            // 2. Make inner content container visible
+            document.getElementById('main-application').classList.add('visible');
+            
+            // 3. Re-enable natural body layout scrolling as panels split off-canvas
+            setTimeout(() => {
+                document.body.style.overflow = 'auto';
+            }, 1400);
+        }
+
+        function scrollToAnchor(targetId, element) {
+            document.querySelectorAll('.dock-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+            
+            const target = document.getElementById(targetId);
+            if(target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    </script>
+</body>
+</html>
